@@ -1,0 +1,6 @@
+all obs_river* files have format:
+x (lon, m), y (lat, m), z (elevation, m), d (distance, m), A (area, m^2)
+
+d=0 at head, i.e. dz/dx=<0. 
+
+GGR 20.02.13
