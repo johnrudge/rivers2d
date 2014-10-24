@@ -62,7 +62,7 @@ river_weights = [1.0] * nriver  # weight all rivers the same
 weights = river_weights + [lambda_space, lambda_time]
 pins = array([False]*nt*nv) # by default don't pin any values
 # pins[(nt-1)*nv:nt*nv] = True # pin the values for the last time step
-result, fit, residual, misfit = lsq_inversion(Ms, bs, weights, 'nnls', pins)
+result, fit, residual, misfit = lsq_inversion(Ms, bs, weights, 'nnls_bfgs', pins)
 
 # Calculate nullity
 nullity = calculate_nullity(Ms_model)

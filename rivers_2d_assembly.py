@@ -1,8 +1,9 @@
 # Matrix assembly and related routines for 2D river inversion
 
 from dolfin import Mesh, Vertex, Point, Cell, cells, faces, vertices  # leverage some mesh manipulation from dolfin
-from numpy import array, zeros, zeros_like, ones_like, where, diff, sqrt, outer, ones, tril_indices, concatenate, arange, meshgrid, argsort, searchsorted, insert, append, tile, nonzero, ndarray, bincount   # basic matrix algebra
+from numpy import array, zeros, zeros_like, ones_like, where, diff, sqrt, outer, ones, tril_indices, concatenate, arange, meshgrid, argsort, searchsorted, insert, append, tile, nonzero, ndarray, bincount, squeeze, asarray  # basic matrix algebra
 from scipy.sparse import coo_matrix, hstack, vstack # sparse matrix
+from scipy.optimize import nnls
 import glob # file matching
 import lbfgs_nnls # non-negative least squares fitting routine
 from sklearn.utils.extmath import safe_sparse_dot
@@ -370,10 +371,18 @@ def lsq_inversion(Ms, bs, weights, algorithm, pins):
     if algorithm == 'lsqr':
         result_pin = lsqr(M_pin,b)[0]
     
-    if algorithm == 'nnls':
-        nnls = lbfgs_nnls.LbfgsNNLS()
-        nnlsfit = nnls.fit(M_pin, b)
+    if algorithm == 'nnls_bfgs':
+        nnls_bfgs = lbfgs_nnls.LbfgsNNLS()
+        nnlsfit = nnls_bfgs.fit(M_pin, b)
         result_pin = nnlsfit.coef_
+        print type(result_pin)
+        
+    if algorithm == 'nnls_kkt':
+        # VERY SLOW way of doing nnls
+        # Has to form large dense array
+        M_pin_dense = M_pin.todense()
+        b_vector= squeeze(asarray(b.todense()))        
+        result_pin = nnls(M_pin_dense, b_vector)[0]
 
     result = zeros(len(pins))
     result[~pins] = result_pin
