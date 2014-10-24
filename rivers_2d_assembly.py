@@ -375,7 +375,6 @@ def lsq_inversion(Ms, bs, weights, algorithm, pins):
         nnls_bfgs = lbfgs_nnls.LbfgsNNLS()
         nnlsfit = nnls_bfgs.fit(M_pin, b)
         result_pin = nnlsfit.coef_
-        print type(result_pin)
         
     if algorithm == 'nnls_kkt':
         # VERY SLOW way of doing nnls
