@@ -13,6 +13,10 @@ def bary_coords(x, y, mesh):
     # Work out which cells the points are in
     # ... it would be nice to have a properly vectorized version of this
 
+    # If given empty arrays, return empty arrays
+    if x.size == 0:
+        return [], []
+
     try:
         # latest version of dolfin supports this more optimised? method
         bbox = mesh.bounding_box_tree()
