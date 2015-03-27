@@ -48,10 +48,12 @@ for river_dict in river_data:
 # Scaling so that longest river has a Gilbert time = 1,
 # highest elevation = 1, and dimensionless v = 1
 t_scale = max_time
-x_scale = (1.0/(v*t_scale))**(1.0/(2.0*m - 1.0))
+d_scale = (1.0/(v*t_scale))**(1.0/(2.0*m - 1.0))
+x_scale = d_scale / 1000.0
 z_scale = max_elevation
 
 print "Time scale", t_scale, "Myr"
+print "Horizontal scale", d_scale, "m"
 print "Horizontal scale", x_scale, "km"
 print "Vertical scale", z_scale, "km"
     
@@ -64,8 +66,8 @@ for river_dict in river_data:
     scaled_river_dict['y'] = river_dict['y']/x_scale
     scaled_river_dict['z'] = river_dict['z']/z_scale
     scaled_river_dict['t'] = river_dict['t']/t_scale
-    scaled_river_dict['A'] = river_dict['A']/(x_scale*x_scale)
-    scaled_river_dict['d'] = river_dict['d']/x_scale
+    scaled_river_dict['A'] = river_dict['A']/(d_scale*d_scale)
+    scaled_river_dict['d'] = river_dict['d']/d_scale
     scaled_river_data.append(scaled_river_dict)
 
 # Rescale mesh
