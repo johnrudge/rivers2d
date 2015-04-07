@@ -71,7 +71,7 @@ time_misfit = zeros(len(ls))
 for i, lambda_space in enumerate(ls):
 #for i, lambda_time in enumerate(ls):
     weights = river_weights + [lambda_space, lambda_time]
-    result, fit, residual, misfit = lsq_inversion(Ms, bs, weights, 'nnls', pins)
+    result, fit, residual, misfit = lsq_inversion(Ms, bs, weights, 'nnls_bfgs', pins)
     model_misfit[i] = sum(misfit[:-2])
     time_misfit[i] = misfit[-1]
     space_misfit[i] = misfit[-2]
