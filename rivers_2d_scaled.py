@@ -38,17 +38,28 @@ nriver = len(river_data)
 # Find max time
 max_time = 0.0
 max_elevation = 0.0
+max_distance = 0.0
 for river_dict in river_data:
     rt = river_dict['t']
     rz = river_dict['z']
+    d = river_dict['d']
+    
     max_time = max(max_time, rt[-1])
     max_elevation = max(max_elevation, rz[-1])
+    max_distance = max(max_distance, d[0])
     
 # Determine rescaling 
-# Scaling so that longest river has a Gilbert time = 1,
+## Scaling so that longest river has a Gilbert time = 1,
+## highest elevation = 1, and dimensionless v = 1
+#t_scale = max_time
+#d_scale = (v*max_time)**(1.0/(1.0 - 2.0*m))
+#x_scale = d_scale / 1000.0
+#z_scale = max_elevation
+
+# Scaling so that longest river has a max distance = 1,
 # highest elevation = 1, and dimensionless v = 1
-t_scale = max_time
-d_scale = (1.0/(v*t_scale))**(1.0/(2.0*m - 1.0))
+t_scale = (1.0/v) * max_distance**(1.0 - 2.0*m)
+d_scale = max_distance
 x_scale = d_scale / 1000.0
 z_scale = max_elevation
 
@@ -76,7 +87,8 @@ scaled_mesh.coordinates()[:, :] *= 1.0/x_scale
 scaled_mesh.bounding_box_tree().build(scaled_mesh)
 
 # Work out time blocks
-scaled_t = linspace(0.0, 1.0, nt)
+scaled_max_time = max_time/t_scale
+scaled_t = linspace(0.0, scaled_max_time, nt)
 
 print 'Times = ', scaled_t, "dimensionless time"
 print 'Number of times = ', nt, '  Number of vertices = ', nv
