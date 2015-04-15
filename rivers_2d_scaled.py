@@ -112,6 +112,7 @@ U = scaled_U * z_scale/t_scale
 z = scaled_z * z_scale
 t = scaled_t * t_scale
 fit = [f*z_scale for f in scaled_fit]
+misfit = [m*z_scale*z_scale for m in scaled_misfit]
 
 # Output in different formats for visualisation etc.
 print "Writing output"
@@ -141,3 +142,9 @@ output_vector_vtk(mesh, t, z, vtk_dir + "z.pvd")
 # Info map
 output_vector_ascii(mesh, t, null,  ascii_dir + "null.txt")
 output_vector_vtk(mesh, t, null, vtk_dir + "null.pvd")
+
+# Calculate RMS model misfit (xi scaled)
+n_observations=sum([len(b) for b in bs_model])
+sigma_z = 20.0 # elevation error
+xi_rms_model_misfit = sqrt(sum(misfit[:-2])/n_observations)/sigma_z
+print "Xi RMS model misfit = ", xi_rms_model_misfit
