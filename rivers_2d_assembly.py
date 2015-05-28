@@ -4,6 +4,7 @@ from dolfin import Mesh, Vertex, Point, Cell, cells, faces, vertices  # leverage
 from numpy import array, zeros, zeros_like, ones_like, where, diff, sqrt, outer, ones, tril_indices, concatenate, arange, meshgrid, argsort, searchsorted, insert, append, tile, nonzero, ndarray, bincount, squeeze, asarray  # basic matrix algebra
 from scipy.sparse import coo_matrix, hstack, vstack # sparse matrix
 from scipy.optimize import nnls
+from scipy.sparse.linalg import lsqr
 import glob # file matching
 import lbfgs_nnls # non-negative least squares fitting routine
 from sklearn.utils.extmath import safe_sparse_dot
@@ -373,7 +374,8 @@ def lsq_inversion(Ms, bs, weights, algorithm, pins):
     M_pin = M[:,indices]  # remove pinned points from matrix
 
     if algorithm == 'lsqr':
-        result_pin = lsqr(M_pin,b)[0]
+        b_vector= squeeze(asarray(b.todense()))
+        result_pin = lsqr(M_pin,b_vector,atol=1.0e-20,btol=1.0e-20,show=True)[0]
     
     if algorithm == 'nnls_bfgs':
         nnls_bfgs = lbfgs_nnls.LbfgsNNLS()
