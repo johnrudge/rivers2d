@@ -87,7 +87,14 @@ def output_vector_vtk(mesh, t, vector, filename):
     nt, nv = vector.shape
 
     for i in range(nt):
-        F.vector()[:] = vector[i,map]
+        v = vector[i,map]
+        try:
+            F.vector()[:] = v
+        except:
+            # dolfin 1.5 syntax change?
+            from numpy import array
+            v = array(v, dtype='float_')
+            F.vector().set_local(v)
         f << (F, t[i])
 
 
