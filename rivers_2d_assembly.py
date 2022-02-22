@@ -100,8 +100,8 @@ def assemble_space_smooth(mesh, t):
     datx = sm_x[i,k] * tweight[j]
     daty = sm_y[i,k] * tweight[j]
 
-    Sx = coo_matrix((datx.flat,(row.flat,col.flat)),shape =(n_spacesmooth/2, nv*nt))
-    Sy = coo_matrix((daty.flat,(row.flat,col.flat)),shape =(n_spacesmooth/2, nv*nt))
+    Sx = coo_matrix((datx.flat,(row.flat,col.flat)),shape =(n_spacesmooth//2, nv*nt))
+    Sy = coo_matrix((daty.flat,(row.flat,col.flat)),shape =(n_spacesmooth//2, nv*nt))
     
     S = vstack([Sx,Sy],'csc')
     b = zeros(n_spacesmooth)
