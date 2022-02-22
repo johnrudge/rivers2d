@@ -38,4 +38,4 @@ References
 
 [1] Rudge J.F., Roberts G.G., White N., Richardson C.N. Uplift histories of 
 Africa and Australia from linear inverse modeling of drainage inventories (2015) 
-J. Geophys. Res. Earth Surf. 120:1-21
+J. Geophys. Res. Earth Surf. 120:1-21 http://dx.doi.org/10.1002/2014JF003297
