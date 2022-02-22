@@ -45,8 +45,8 @@ for river_dict in river_data:
 tint = arange(int(max_time/dt)+1)*dt
 t = append(tint,max_time)
 nt = len(t)
-print 'Times = ', t, "Ma"
-print 'Number of times = ', nt, '  Number of vertices = ', nv
+print('Times = ', t, "Ma")
+print('Number of times = ', nt, '  Number of vertices = ', nv)
 
 # Assemble matrices
 [Ms_model, bs_model] = assemble_model(mesh, t, river_data)
@@ -75,7 +75,7 @@ z = cumtrapz(U[::-1,:], x=-t[::-1,None], axis=0)[::-1]
 z = concatenate([z, zeros((1,nv))], axis=0)
 
 # Output in different formats for visualisation etc.
-print "Writing output"
+print("Writing output")
 vtk_dir = output_dir + "vtk/"
 ascii_dir = output_dir + "ascii/"
 gnuplot_dir = output_dir + "gnuplot/"
@@ -107,4 +107,4 @@ output_vector_vtk(mesh, t, null, vtk_dir + "null.pvd")
 n_observations=sum([len(b) for b in bs_model])
 sigma_z = 20.0 # elevation error
 xi_rms_model_misfit = sqrt(sum(misfit[:-2])/n_observations)/sigma_z
-print "Xi RMS model misfit = ", xi_rms_model_misfit
+print("Xi RMS model misfit = ", xi_rms_model_misfit)

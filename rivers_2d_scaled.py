@@ -63,10 +63,10 @@ d_scale = max_distance
 x_scale = d_scale / 1000.0
 z_scale = max_elevation
 
-print "Time scale", t_scale, "Myr"
-print "Horizontal scale", d_scale, "m"
-print "Horizontal scale", x_scale, "km"
-print "Vertical scale", z_scale, "km"
+print("Time scale", t_scale, "Myr")
+print("Horizontal scale", d_scale, "m")
+print("Horizontal scale", x_scale, "km")
+print("Vertical scale", z_scale, "km")
     
 # Rescale input data
 scaled_river_data = []
@@ -90,8 +90,8 @@ scaled_mesh.bounding_box_tree().build(scaled_mesh)
 scaled_max_time = max_time/t_scale
 scaled_t = linspace(0.0, scaled_max_time, nt)
 
-print 'Times = ', scaled_t, "dimensionless time"
-print 'Number of times = ', nt, '  Number of vertices = ', nv
+print('Times = ', scaled_t, "dimensionless time")
+print('Number of times = ', nt, '  Number of vertices = ', nv)
 
 # Assemble matrices
 [Ms_model, bs_model] = assemble_model(scaled_mesh, scaled_t, scaled_river_data)
@@ -127,7 +127,7 @@ fit = [f*z_scale for f in scaled_fit]
 misfit = [m*z_scale*z_scale for m in scaled_misfit]
 
 # Output in different formats for visualisation etc.
-print "Writing output"
+print("Writing output")
 vtk_dir = output_dir + "vtk/"
 ascii_dir = output_dir + "ascii/"
 gnuplot_dir = output_dir + "gnuplot/"
@@ -159,4 +159,4 @@ output_vector_vtk(mesh, t, null, vtk_dir + "null.pvd")
 n_observations=sum([len(b) for b in bs_model])
 sigma_z = 20.0 # elevation error
 xi_rms_model_misfit = sqrt(sum(misfit[:-2])/n_observations)/sigma_z
-print "Xi RMS model misfit = ", xi_rms_model_misfit
+print("Xi RMS model misfit = ", xi_rms_model_misfit)

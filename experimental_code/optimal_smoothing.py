@@ -53,8 +53,8 @@ for river_dict in river_data:
 tint = arange(int(max_time/dt)+1)*dt
 t = append(tint,max_time)
 nt = len(t)
-print 'Times = ', t, "Ma"
-print 'Number of times = ', nt, '  Number of vertices = ', nv
+print('Times = ', t, "Ma")
+print('Number of times = ', nt, '  Number of vertices = ', nv)
 
 # Assemble matrices
 [Ms_model, bs_model] = assemble_model(mesh, t, river_data)
@@ -109,7 +109,7 @@ def f(log_lambda_space):
     
     l_curve_curvature = calc_curvature(log10(model_misfit),log10(space_misfit),log10(model_misfit_plus),log10(space_misfit_plus),log10(model_misfit_minus),log10(space_misfit_minus))
     
-    print lambda_time, lambda_space, l_curve_curvature
+    print(lambda_time, lambda_space, l_curve_curvature)
 
     return -l_curve_curvature
 
@@ -117,4 +117,4 @@ res = minimize_scalar(f, bracket = (log_lambda_space_min, log_lambda_space_mid, 
 
 lambda_space_optimal = 10.0**res.x
 
-print "Optimal space smoothing parameter is ", lambda_space_optimal
+print("Optimal space smoothing parameter is ", lambda_space_optimal)

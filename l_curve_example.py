@@ -45,8 +45,8 @@ for river_dict in river_data:
 tint = arange(int(max_time/dt)+1)*dt
 t = append(tint,max_time)
 nt = len(t)
-print 'Times = ', t, "Ma"
-print 'Number of times = ', nt, '  Number of vertices = ', nv
+print('Times = ', t, "Ma")
+print('Number of times = ', nt, '  Number of vertices = ', nv)
 
 # Assemble matrices
 [Ms_model, bs_model] = assemble_model(mesh, t, river_data)
@@ -76,7 +76,7 @@ for i, lambda_space in enumerate(ls):
     time_misfit[i] = misfit[-1]
     space_misfit[i] = misfit[-2]
     
-    print lambda_time, lambda_space, model_misfit[i], space_misfit[i], time_misfit[i]
+    print(lambda_time, lambda_space, model_misfit[i], space_misfit[i], time_misfit[i])
 
 xv = model_misfit
 yv = space_misfit

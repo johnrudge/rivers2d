@@ -70,7 +70,7 @@ def trapezoidal_rule_weights(s, axis = -1):
 
 def assemble_space_smooth(mesh, t):
     """Build matrix and rhs for smoothing in space"""
-    print 'Begin spatial smoothing assemble...'
+    print('Begin spatial smoothing assemble...')
     nt = len(t)
     nv = mesh.num_vertices()
     nf = mesh.num_faces()
@@ -89,7 +89,7 @@ def assemble_space_smooth(mesh, t):
         sm_y[idx,:] = array([x[2]-x[1], x[0]-x[2], x[1]-x[0]]) / (2.0*sqrt(area))
 
     n_spacesmooth = nf*3*nt*2
-    print 'Spatial smoothing entries = ', n_spacesmooth
+    print('Spatial smoothing entries = ', n_spacesmooth)
 
     # weight times according to trapezoidal rule
     tweight = sqrt(trapezoidal_rule_weights(t))
@@ -106,18 +106,18 @@ def assemble_space_smooth(mesh, t):
     S = vstack([Sx,Sy],'csc')
     b = zeros(n_spacesmooth)
     
-    print "Space smooth assembled."
+    print("Space smooth assembled.")
     return S, b
 
 
 def assemble_time_smooth(mesh, t):
     """Build matrix and rhs for smoothing in time"""
-    print 'Begin temporal smoothing assemble...'
+    print('Begin temporal smoothing assemble...')
     # temporal smoothing
     nt = len(t)
     nv = mesh.num_vertices()
     n_timesmooth = nv*(nt-1)
-    print 'Temporal smoothing entries = ', n_timesmooth
+    print('Temporal smoothing entries = ', n_timesmooth)
 
     vidx = zeros(nv)
     a_weight = zeros(nv)
@@ -147,7 +147,7 @@ def assemble_time_smooth(mesh, t):
     S = S.tocsc()
     b = zeros(n_timesmooth)
  
-    print "Time smooth assembled."
+    print("Time smooth assembled.")
     return S, b
 
 
@@ -291,24 +291,24 @@ def assemble_model_single_river(mesh, t, river_dict):
 
 def assemble_model(mesh, t, river_data):
     """Assemble model matrices and rhs for a list of rivers"""
-    print 'Begin model assemble...'
+    print('Begin model assemble...')
     
     Ms = []
     bs = []
 
     for ifile, river_dict in enumerate(river_data):
-        print 'Processing %s [%d/%d]'%(river_dict['filename'], ifile + 1, len(river_data))
+        print('Processing %s [%d/%d]'%(river_dict['filename'], ifile + 1, len(river_data)))
         M, b = assemble_model_single_river(mesh, t, river_dict)
         Ms.append(M)
         bs.append(b)
 
-    print "Model assembled."
+    print("Model assembled.")
     return Ms, bs
 
 
 def parse_river_file(filename, v, m):
     """Parse a single river file"""
-    print "Reading : ", filename
+    print("Reading : ", filename)
     f = open(filename)
     riverdata = f.readlines()
     f.close()
@@ -346,7 +346,7 @@ def parse_river_file(filename, v, m):
             rt[i] = rt[i-1] + 0.5*dx*(1.0/(v*A[i-1]**m) + 1.0/(v*A[i]**m))
         else:
             # Upstream area is zero or small - try midpoint rule instead
-            print "Warning, switching to midpoint rule for point", i
+            print("Warning, switching to midpoint rule for point", i)
             dx = d[i-2] - d[i]
             rt[i] = rt[i-2] + dx*(1.0/(v*A[i-1]**m))
 
@@ -362,7 +362,7 @@ def parse_river_data(input_dir, pattern, v, m):
 
 def lsq_inversion(Ms, bs, weights, algorithm, pins):
     """Least squares inversion for uplift"""
-    print 'Begin least squares fit'
+    print('Begin least squares fit')
     
     weighted_Ms = [w*M for w, M in zip(weights, Ms)]
     weighted_bs = [w*b for w, b in zip(weights, bs)]
@@ -396,12 +396,12 @@ def lsq_inversion(Ms, bs, weights, algorithm, pins):
     residual = [f - b for f, b in zip(fit, bs)]
     misfit = [safe_sparse_dot(r,r) for r in residual] 
 
-    print 'Finished least squares fit'
+    print('Finished least squares fit')
     return result, fit, residual, misfit
 
 
 def calculate_nullity(Ms):
-    print 'Calculating nullity'
+    print('Calculating nullity')
     # Get nullity
     M = vstack(Ms,'csc')
     row, col = M.nonzero()

@@ -52,8 +52,8 @@ for river_dict in river_data:
 tint = arange(int(max_time/dt)+1)*dt
 t = append(tint,max_time)
 nt = len(t)
-print 'Times = ', t, "Ma"
-print 'Number of times = ', nt, '  Number of vertices = ', nv
+print('Times = ', t, "Ma")
+print('Number of times = ', nt, '  Number of vertices = ', nv)
 
 # Assemble matrices
 [Ms_model, bs_model] = assemble_model(mesh, t, river_data)
@@ -116,7 +116,7 @@ for i, lambda_space in enumerate(ls):
     
     l_curve_curvature[i] = calc_curvature(log10(model_misfit[i]),log10(space_misfit[i]),log10(model_misfit_plus),log10(space_misfit_plus),log10(model_misfit_minus),log10(space_misfit_minus))
     
-    print lambda_time, lambda_space, model_misfit[i], space_misfit[i], time_misfit[i], l_curve_curvature[i]
+    print(lambda_time, lambda_space, model_misfit[i], space_misfit[i], time_misfit[i], l_curve_curvature[i])
 
 xv = model_misfit
 yv = space_misfit

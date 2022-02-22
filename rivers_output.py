@@ -102,7 +102,7 @@ def output_river_data_vtk(river_data, filename):
     try:
         from evtk.hl import pointsToVTK
     except ImportError:
-        print "Warning: Python EVTK module not found - not writing VTK river data."
+        print("Warning: Python EVTK module not found - not writing VTK river data.")
         return
         
     from numpy import concatenate, zeros_like
