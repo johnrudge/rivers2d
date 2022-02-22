@@ -12,21 +12,21 @@ Installation
 
 In order to run these scripts, you need to have the following installed:
 
-* python 2.7
+* python 3.6
 * numpy (1.7 or later)
 * scipy (0.12 or later)
-* dolfin 1.3.0 (www.fenicsproject.org)
+* FEniCS 2019.1.0 (www.fenicsproject.org)
 * scikit-learn (0.13 or later)
 
-For VTK output of river data, you also need the EVTK library
-installed (https://bitbucket.org/pauloh/pyevtk).
+For VTK output of river data, you also need the pyevtk library
+installed.
 
 Usage
 =====
 
 The main routine is rivers_2d.py, which can be run with
 
-python rivers_2d.py
+python3 rivers_2d.py
 
 which will invert the example data for Madagascar, contained in the 
 madagascar_data folder. All obs_river* files have format:
